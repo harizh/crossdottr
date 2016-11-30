@@ -3,18 +3,13 @@
 angular.module('myApp.commonComponent',[]);
 angular.module('myApp.commonComponent')
 	.constant('DATE_TIME_PICKER_DEFAULTS', {
-            timepicker: true,
-            lazyInit: true,
-            mask: '9999/19/39 12:30',
-            format: 'yyyy/MM/dd H:m:s',
+            format: 'dd MMMM yyyy H:m:s',
             closeOnDateSelect: true,
             validateOnBlur: true,
-            allowBlank: true,
             startDate:new Date(),
-            defaultDate:new Date(),
-            yearStart: 1900
+            yearStart: 1900,
         })
-        .directive('msDateTimePicker', function (DATE_TIME_PICKER_DEFAULTS, $filter) {
+        .directive('msDateTimePicker', function (DATE_TIME_PICKER_DEFAULTS, $filter,$timeout) {
             return {
                 require: '?ngModel',
                 scope: {
@@ -30,30 +25,31 @@ angular.module('myApp.commonComponent')
                     }
                     var $dateFilter = $filter('date'),
                         options = angular.extend({}, DATE_TIME_PICKER_DEFAULTS);
-
-                    angular.extend(options, getMinMaxDates());
+                        options.onGenerate =function( ct ){
+						    place(jQuery(this));
+						}
 
                     options.onChangeDateTime = function (dt, $input, e) {
-                        ngModelController.$setViewValue($dateFilter(dt, 'yyyy/MM/dd H:m:s'));
+                        ngModelController.$setViewValue($dateFilter(dt, 'dd MMMM yyyy H:m:s'));
                     };
 
                     ngModelController.$render = function () {
-                        $element.datetimepicker(options);
-                        $element.datetimepicker('show');
+                    	render($element);
                     };
-
-                    function getMinMaxDates() {
-                        return {
-                            minDate: $scope.ngMin || false,
-                            maxDate: $scope.ngMax || false,
-                            // ownerDocument: $element
-                        };
+                    function render($element){
+                    	$timeout(function(){
+                        	$element.datetimepicker(options);
+                        	$element.datetimepicker('show');
+                    	},100);
                     }
-
-                    $scope.$watchGroup(['ngMin', 'ngMax'], function () {
-                        angular.extend(options, getMinMaxDates());
-                        $element.datetimepicker(options);
-                    });
+                    function place($element){
+                    	$timeout(function(){
+                        	var offset = $element.offset();
+                        	$element.css({
+                        		top: offset.top - 200+'px'
+                        	});
+                    	},100);
+                    }
 
                     $scope.$on('$destroy', function () {
                         $element.datetimepicker('destroy');

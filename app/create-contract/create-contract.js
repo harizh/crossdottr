@@ -118,7 +118,7 @@ angular.module('myApp.createContract', ['ngRoute'])
         $scope.contractName = '';
         $scope.email = '';
         $scope.fullName = '';
-        $scope.expiryDate = moment(new Date(), "DD-MM-YYYY").add(30,'days').format("DD MMMM YYYY");
+        $scope.expiryDate = moment(new Date(), "DD-MM-YYYY").add(30,'days').format("DD MMMM YYYY H:m:s");
         $scope.chooseExpiry = false;
 
         $scope.addPartyFileds = function() {
