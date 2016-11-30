@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="myApp" class="no-js">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>Cross Dottr</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="assets/css/glyphicons/glyphicons.css" type="text/css" />
+    <link rel="stylesheet" href="assets/css/font-awesome/css/font-awesome.min.css" type="text/css" />
+    <link rel="stylesheet" href="assets/css/material-design-icons/material-design-icons.css" type="text/css" />
+    <link rel="stylesheet" href="assets/css/bootstrap.min.css" type="text/css" />
+    <!-- build:css assets/styles/app.min.css -->
+    <link rel="stylesheet" href="assets/css/app.min.css" type="text/css" />
+    <!-- endbuild -->
+    <link rel="stylesheet" href="assets/css/font.css" type="text/css" />
+    <link rel="stylesheet" href="assets/css/style.css" type="text/css" />
+    <link rel="stylesheet" href="assets/css/bread-crumbs.css" type="text/css" />
+    
+    <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.4/semantic.min.css" />
+    
+    <link href="assets/css/bootstrap.css" rel="stylesheet">
+    <link rel="stylesheet" href="app.css">
+    <link href="assets/css/style.css" rel="stylesheet">
+    
+
+    <link href="font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+<link href="//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css" rel="stylesheet">
+<link href="assets/css/context-menu.css" rel="stylesheet"> -->
+<base href="/">
+</head>
+
+<body>
+    <div id="aside" class="app-aside modal fade nav-dropdown" ng-include src="'shared/partials/side-bar.html'" ng-if="login">
+        
+    </div>
+    <div id="content" class="app-content box-shadow-z0" role="main" >
+        <div class="app-header" ng-include src="'shared/partials/header.html'" >
+            
+        </div>
+        <!-- Right panel content -->
+        <div class="app-body" id="view">
+            <div class="padding container" ng-view></div>
+        </div>
+    </div>
+
+    <div class="overlay"></div>
+        <img src="assets/images/loading_spinner.gif" class="ajax-loader"/>
+        <!-- In production use:
+  <script src="//ajax.googleapis.com/ajax/libs/angularjs/x.x.x/angular.min.js"></script>
+  -->
+  <script src="https://code.jquery.com/jquery-3.1.1.js" crossorigin="anonymous"></script>
+        <script src="components/version/angular.js"></script>
+        <script src="components/version/angular-router.js"></script>
+        
+        <script src="http://code.jquery.com/ui/1.12.1/jquery-ui.js" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/signature_pad/1.5.3/signature_pad.min.js"></script>
+        <script src="app.js"></script>
+        <script src="activity/activity.js"></script>
+        <script src="sign-contract/sign-contract.js"></script>
+        <script src="components/version/context-menu.js"></script>
+        <script src="shared/services/http-service.js"></script>
+        <script src="contract-listing/contract-listing.js"></script>
+        <script src="contract-details/contract-details.js"></script>
+        <script src="create-contract/create-contract.js"></script>
+        <script src="user/user.js"></script>
+        <script src="components/version/version.js"></script>
+        <script src="components/version/version-directive.js"></script>
+        <script src="components/version/interpolate-filter.js"></script>
+        <!-- <script src="js/jquery.js"></script> -->
+        <!-- Bootstrap Core JavaScript -->
+        <script src="js/bootstrap.min.js"></script>
+</body>
+
+</html>

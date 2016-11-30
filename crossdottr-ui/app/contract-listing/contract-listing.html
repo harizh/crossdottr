@@ -1,0 +1,117 @@
+<!-- <div ng-repeat="contract in contracts track by $index" style="border: 1px solid green; padding: 20px;" ng-if='contract.action != "Completed"'>
+    <span>{{contract.party.user.firstName}} {{contract.party.user.lastName}}</span>
+    <span ng-if='contract.action == "Viewed"'> opened {{contract.contractName}} but haven't signed yet</span>
+    <span ng-if='contract.action == "Out for Signing"'>wants your signature for {{contract.contractName}}</span>
+    <span ng-if='contract.action == "Signed"'> signed {{contract.contractName}}</span>
+    <br/>
+    <span>{{contract.time | date:'medium'}} </span>
+</div> -->
+<div class="row m-t">
+    <!-- list -->
+    <div class="col-md-7">
+        <div class="box">
+            <div class="box-header">
+
+                <h3 class="inline" style="font-weight:bold;">Quick Summary: </h3>
+                <button type="button" class="need"><b>2</b> Signatures needed</button>    
+                <button type="button" class="wait"><b>17</b> Waiting for others</button>
+                    
+            </div>
+            <h5>Documents</h5>
+            <div class="list activity">
+
+                <div class="list-item white" ng-repeat="contract in contracts track by $index" ng-if="status == 'ALL' || status == contract.status" >
+                    <div class="list-left">
+                        <span class="w-40 circle _600 text-white blue-grey-100 uppercase">
+                        {{contract.document.fileName | cut:true:1}} 
+                  </span>
+                    </div>
+                    <div class="ribbon" ng-if="contract.status == 'OUT_FOR_SIGNING'"></div>
+                   
+                    <div class="list-body">
+
+                        <div class="m-b-xs">
+                            
+                            <a href="/#!/contract/{{contract.id}}" ng-if="contract.name"><b>{{contract.name}}</b></a>
+                            <a href="/#!/contract/{{contract.id}}" ng-if="!contract.name"><b>{{contract.document.fileName}}</b></a>
+                            </div>
+                            <div>
+                            <span class="text-sm ng-binding" style="opacity: 1; color: #808080">
+                              <a href="" ng-class="{completed : contract.status == 'COMPLETED', draft : contract.status == 'DRAFT'}"> {{contract.status}} </a>
+                              {{contract.modifiedOn  | date:'yyyy-MM-dd HH:mm:ss Z'}}</span>
+
+                           
+                            <span ng-if='contract.action == "Viewed"'> opened <span class="text-info">{{contract.contractName}}</span> but haven't signed yet</span>
+                            <span ng-if='contract.action == "Signed"'> signed <span class="text-info">{{contract.contractName}}</span></span>
+                            
+                            <div class="new" ng-if="contract.status == 'DRAFT'"></div>
+                        </div>
+                        <div>
+                            <span class="text-muted text-sm">{{contract.time | date:'medium'}}</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- / list -->
+    <div class="col-md-5">
+        <div class="box">
+            <div class="box-header">
+                <h3>Manage Identity</h3>
+            </div>
+            <div class="box-body identity">
+                <div>
+                    <a href="" class="pull-left w-56 m-r"><img src="assets/images/a0.jpg" class="img-responsive img-circle"></a>
+                    <div class="clear">
+                        <a href="" class="_500 text-md block">Barrington Russell</a>
+                        <span class="text-sm text-muted">CPO</span>
+                        <span class="text-sm text-muted block">CrossDottr</span>
+                        <img class="identity-sig" src="assets/images/tomlee-signature.png" class="img-responsive">
+                        <button class="btn btn-icon btn-sm rounded white" data-toggle="modal" data-target="#create-sign">
+                            <i class="fa fa-pencil"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="box">
+            <div class="box-header">
+                <h3>Overview</h3>
+            </div>
+            <div class="p-a">
+                <div class="pull-left m-r">
+                    <i class="material-icons md-24 text-info inline">&#xE873;</i>
+                </div>
+                <div class="clear">
+                    <h4 class="m-a-0 text-md"><a href="">45 <span class="text-sm">Documents</span></a></h4>
+                    <small class="text-muted">Signed this month</small>
+                </div>
+            </div>
+            <div class="p-a">
+                <div class="pull-left m-r">
+                    <i class="material-icons md-24 text-info inline">&#xE425;</i>
+                </div>
+                <div class="clear">
+                    <h4 class="m-a-0 text-md"><a href="">3hr 27min</a></h4>
+                    <small class="text-muted">Average time to completion</small>
+                </div>
+            </div>
+            <div class="p-a">
+                <div class="pull-left m-r">
+                    <i class="material-icons md-24 text-info inline">&#xE880;</i>
+                </div>
+                <div class="clear">
+                    <h4 class="m-a-0 text-md"><a href="">1.2 Times <span class="text-sm">On average</span></a></h4>
+                    <small class="text-muted">Document views</small>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+
+<div class="container space"></div>
+
+

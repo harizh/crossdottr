@@ -1,0 +1,59 @@
+<div class="navbar">
+    <!-- Open side - Naviation on mobile -->
+    <a data-toggle="modal" data-target="#aside" class="navbar-item pull-left hidden-lg-up">
+        <i class="material-icons">&#xe5d2;</i>
+    </a>
+    <!-- / -->
+    <!-- Page title - Bind to $state's title -->
+    <div class="navbar-item pull-left h5" ng-bind="$state.current.data.title" id="pageTitle"></div>
+    <!-- navbar right -->
+    <ul class="nav navbar-nav pull-right" ng-if="login">
+        <li class="nav-item">
+            <a href="" class="btn btn-sm btn-upgrade">Upgrade</a>
+        </li>
+        <!-- <li class="nav-item dropdown pos-stc-xs">
+                <a class="nav-link" href data-toggle="dropdown">
+                  <i class="material-icons">&#xe7f5;</i>
+                  <span class="label label-sm up danger">3</span>
+                </a>
+                <div ui-include="'views/blocks/dropdown.notification.html'"></div>
+              </li> -->
+        <li class="nav-item dropdown">
+            <a class="nav-link clear" href data-toggle="dropdown">
+                <span class="avatar w-32">
+                    <img src="assets/images/a0.jpg" alt="...">
+                    <i class="on b-white bottom"></i>
+                  </span>
+            </a>
+            <div ui-include="'views/blocks/dropdown.user.html'"></div>
+        </li>
+        <li class="nav-item hidden-md-up">
+            <a class="nav-link" data-toggle="collapse" data-target="#collapse">
+                <i class="material-icons">&#xe5d4;</i>
+            </a>
+        </li>
+    </ul>
+    <!-- / navbar right -->
+    <!-- navbar collapse -->
+    <div class="collapse navbar-toggleable-sm" id="collapse">
+        <div class="navbar cross-nav" id="logo-item" ng-if="!login">
+                <!-- brand -->
+                <a href="index.html" class="navbar-brand">
+                    <img src="assets/images/logo.png" alt="crossdottr logo">
+                </a>
+                <!-- / brand -->
+            </div>
+        <!-- link and dropdown -->
+        <form class="navbar-form form-inline pull-none-sm navbar-item v-m" role="search">
+            <div class="form-group l-h m-a-0">
+                <div class="input-group top-search">
+                    <span class="input-group-btn">
+                      <button type="submit" class="btn white no-shadow"><i class="fa fa-search"></i></button>
+                    </span>
+                    <input type="text" class="form-control no-shadow" placeholder="Search documents...">
+                </div>
+            </div>
+        </form>
+    </div>
+    <!-- / navbar collapse -->
+</div>

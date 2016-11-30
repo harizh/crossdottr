@@ -1,0 +1,85 @@
+<div class="container" id="sign-item">
+    <div style="z-index: 9999; width: 600px;clear: both;  visibility: hidden; height: 0; position: fixed; left:30%;" id="signature-container">
+        <div id="signature-pad" class="m-signature-pad" style="padding: 20px; position:absolute; top:0;">
+            <div>
+                <h5 style="font-size: 16px; font-weight: bold">Create your electronic signature</h5>
+                <p style="font-size: 13px;"> Just like a traditional signature, this mark is used by CrossDottr to represent your intent to sign documents.You appear to be located in <strong>Denmark</strong> where electronic signatures are legally binding. <a class="text-primary _500" href="">Read more</a>
+                </p>
+                <!-- <span>Draw your signature below </span> -->
+            </div>
+            <div class="m-signature-pad--body">
+                <canvas width="100px" height="100px"></canvas>
+            </div>
+            <div class="m-signature-pad--footer">
+                <div class="m-t-sm" style="font-size: 14px;">
+                    <span class="text-muted">Draw your signature above the line</span>
+                    <a class="text-danger pull-right" data-action="clear"><i class="material-icons">&#xE5CD;</i> Clear Signature</a>
+                </div>
+                <div class="m-t-sm" style="font-size: 14px;">
+                    <input type="checkbox" id="agree"> I agree to have this signature legally represent me.
+                </div>
+                <div class="m-t-sm pull-right" style="font-size: 14px;">
+                    <button type="button" class="button btn btn-default" data-action="close">Cancel</button>
+                    <button type="button" class="button save btn btn-primary" data-action="save">Agree & Choose</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-10 col-md-offset-1 document-header text-center" id="col-final">
+            <h6 style="color: white; line-height: 20px;">Almost Done! Click finalize to send the contract :</h6>
+            <button type="button" class="btn btn-success" ng-click="signContract()">Finalize</button>&nbsp;&nbsp;
+            <button type="button" class="btn btn-danger" ng-click="rejectContract()">Reject</button>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-10 col-md-offset-1" style="width: 100%;margin-left: 0;margin-top: 50px">
+            <div class="document-sign">
+                <div class="document-content">
+                    <img ng-repeat="thumbnail in thumbnails track by $index" src="http://staging-1.crossdottr.com/files/{{thumbnail.name}}" class="img-responsive">
+                    <span ng-repeat="filed in fileds track by $index" style="position: absolute; top:{{filed.yOrigin}}px; left: {{filed.xOrigin}}px;border: 2px solid green;">
+                    <span ng-if="filed.fieldType == 'SIGNATURE'" ng-click="showSignaturePad(filed.id)" id="{{filed.id}}" class="{{filed.fieldType}} sign-holder btn" style="width:{{filed.minWidth}}px;height:{{filed.minHeight}}px; padding:0;">
+                        <span style="width:{{filed.minWidth}}px;height:{{filed.minHeight}}px;" ng-if="!utl" id="sign-text">{{filed.fieldType}}</span>
+                    <img id="img-tag" src="{{utl}}" ng-if="utl" style="width:{{filed.minWidth}}px;height:{{filed.minHeight}}px;">
+                    </span>
+                    <input type="text" ng-if="filed.fieldType == 'NAME'" id="{{filed.id}}" ng-blur="saveText(filed.id);" value="{{filed.text}}" ng-readonly="filed.text" style="width:{{filed.minWidth}}px;height:{{filed.minHeight}}px;" placeholder="NAME">
+                        
+                    <input type="text" ng-if="filed.fieldType == 'FREE_TEXT'" id="{{filed.id}}" ng-blur="saveText(filed.id);" value="{{filed.text}}" ng-readonly="filed.text" style="width:{{filed.minWidth}}px;height:{{filed.minHeight}}px;" placeholder="FREE_TEXT">
+                        
+                    <input type="text" ng-if="filed.fieldType == 'INITIALS'" id="{{filed.id}}" ng-blur="saveText(filed.id);" value="{{filed.text}}" ng-readonly="filed.text" style="width:{{filed.minWidth}}px;height:{{filed.minHeight}}px;" placeholder="INITIALS">
+                        
+                        
+                    <input type="file" ng-if="filed.fieldType == 'FILE_UPLOAD'" class="upload-file" id="{{filed.id}}" onchange="angular.element(this).scope().saveFile(this.files)" style="width:{{filed.minWidth}}px;height:{{filed.minHeight}}px;">
+                    <input type="text" ng-if="filed.fieldType == 'DATE' " id="{{filed.id}}" ng-blur="saveText(filed.id);" ng-model="filedVal[filed.fieldType]" readonly style="width:{{filed.minWidth}}px;height:{{filed.minHeight}}px;">
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row" ng-if="parties.length > 0">
+        <div class="col-md-10 m-t-lg m-b-lg col-md-offset-1">
+            <ul class="list document-party">
+                <h5 class="_100 m-b-md">Document Parties</h5>
+                <li class="list-item" ng-repeat="party in parties track by $index">
+                    <a herf="" class="list-left">
+                        <span class="w-40 avatar text-white blue-grey-100">
+                  <span style="text-transform:uppercase;">{{party.user.firstName  | cut:true:1}}{{party.user.lastName  | cut:true:1}}</span>
+                        <i class="on b-white bottom"></i>
+                        </span>
+                    </a>
+                    <div class="list-body">
+                        <div><a href="">{{party.user.firstName}} {{party.user.lastName}}</a></div>
+                        <small class="text-muted text-ellipsis">{{party.role}}</small>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+</div>
+<div id="success" style="display:none; color: green;font-size: 20px;margin-top: 140px;">
+    Successfully signed the contract.
+</div>
+<div id="reject-message" style="display:none; color: red;font-size: 20px;margin-top: 140px;">
+    Rejected the contract.
+</div>

@@ -1,0 +1,349 @@
+<br style="clear: both;">
+<div class="">
+    <div class="ui grid">
+        <div id="send-signee-review">
+            Successfully created the document. It has been sent to the party for signing.
+        </div>
+        <div id="send-signee" style="display: none;">
+            <div class="row" id="doc-section">
+                <div class="col-sm-12">
+                    <span id="doc-title" style="width: 100%;
+text-align: center">Documents / {{contract.name}}</span>
+                </div>
+            </div>
+            <div class="box">
+                <div class="box-header">
+                    <h3>Uploaded Document</h3>
+                </div>
+                <div class="box-body white">
+                    <div><i class="text-md fa fa-file-pdf-o mr10"></i> <strong style="word-wrap: break-word;">{{contract.document.fileName}}</strong>
+                        <a href class="nav-link pull-right"></a>
+                    </div>
+                </div>
+            </div>
+            <div class="box">
+                <div class="box-header">
+                    <h3>Choosen Recipient</h3>
+                </div>
+                <div class="box-body white mb20" ng-repeat="party in contract.parties">
+                    <form role="form">
+                        <div class="form-group">
+                            <div class="text-muted">Name</div>
+                            <div>{{party.user.firstName}}</div>
+                        </div>
+                        <div class="form-group">
+                            <div class="text-muted">Email</div>
+                            <div>{{party.user.emailAddress}}</div>
+                        </div>
+                    </form>
+                </div>
+                <button id="send-sign" ng-click="sendForSign()" class="btn success">Send for Signing <i class="material-icons md-24"></i></button>
+                <!-- <a href="index.html" class="btn success">Send for Signing <i class="material-icons md-24"></i></a> -->
+            </div>
+        </div>
+        <div class="row" id="contract-details">
+            <div class="row" id="doc-section">
+                <div class="col-sm-12">
+                    <span id="doc-title" style="width: 100%;
+text-align: center">Documents / {{contract.name}}</span>
+                </div>
+            </div>
+            <div class="col-md-12">
+                <!-- <h1 class="ui header">Contract Details /<span style="font-weight: normal;">{{contract.name}}</span></h1> -->
+                <span id="pos"></span>
+                <div class="container menu-contanier">
+                    <div class="row">
+                        <div class="col-md-12 test">
+                            <div class="menu-items">
+                                <!-- Menu Items -->
+                                <div class="panel panel-default draggable text-center signature" id="SIGNATURE">
+                                    <div class="panel-body">
+                                        <div id="draggable-signature" class="draggable-signature">
+                                            <div class="nav_con_det_menu" modal="popup-container1">
+                                                <i class="fa fa-pencil"></i>Signature
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="panel panel-default draggable text-center initials" id="INITIALS">
+                                    <div class="panel-body">
+                                        <div id="draggable-signature" class="draggable-signature">
+                                            <div class="nav_con_det_menu" modal="popup-container2">
+                                                <i class="material-icons md-20"></i>Initials
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="panel panel-default draggable text-center name" id="NAME">
+                                    <div class="panel-body">
+                                        <div id="draggable-signature" class="draggable-signature">
+                                            <div class="nav_con_det_menu" modal="popup-container3">
+                                                <i class="material-icons md-20"></i>Name
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="panel panel-default draggable text-center date-container" id="DATE">
+                                    <div class="panel-body">
+                                        <div id="draggable-signature" class="draggable-signature">
+                                            <div class="nav_con_det_menu" modal="popup-container4">
+                                                <i class="material-icons md-20"></i> Signed on
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="panel panel-default draggable text-center free-text" id="FREE_TEXT">
+                                    <div class="panel-body">
+                                        <div id="draggable-signature" class="draggable-signature">
+                                            <div class="nav_con_det_menu" modal="popup-container5">
+                                                <i class="fa fa-terminal"></i> Free Text
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!--  <div class="panel panel-default draggable text-center checkbox-container" id="CHECK_BOX">
+                                        <div class="panel-body">
+                                            <div id="draggable-signature" class="draggable-signature">
+                                                <div class="nav_con_det_menu" modal="popup-container6">
+                                                    <i class="fa fa-check-square"></i> Checkbox
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div> -->
+                                <div class="panel panel-default draggable text-center uplaod-file" id="FILE_UPLOAD">
+                                    <div class="panel-body">
+                                        <div id="draggable-signature" class="draggable-signature">
+                                            <div class="nav_con_det_menu" modal="popup-container7">
+                                                <i class="material-icons md-20"></i> Required Upload
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                  <div id="popup-container1" class="popover popover-sign popover-right popup_style">
+                                    <div class="arrow">
+                                    </div>
+                                    <h3 class="popover-title">Who Signs?</h3>
+                                    <div class="popover-content">
+                                        <div class="btn-group dropdown">
+                                            <select id="SIGNATURE" class="selection-element">
+                                               <option>Select Signee...</option>
+                                                <option ng-repeat="party in contract.parties" value="{{party.user.id}}">{{party.user.firstName}}
+                                                </option>
+                                            </select>
+                                        </div>
+                                        <p>
+                                            <label class="md-switch">
+                                            <input class="has-value" type="checkbox">
+                                            <i class="green"></i>
+                                            Make mandatory
+                                            </label>
+                                        </p>
+
+                                        <div>
+                                            <button class="btn btn-poup btn-primary m-r-sm" ng-click="hideElement()">OK</button>
+                                            <button class="btn btn-poup secondary" ng-click="removeElement()">Remove</button>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div id="popup-container2" class="popover popover-sign popover-right popup_style">
+                                    <div class="arrow">
+                                    </div>
+                                    <h3 class="popover-title">Chose Initial</h3>
+                                    <div class="popover-content">
+                                        <div class="btn-group dropdown">
+                                            <select id="INITIALS" class="selection-element">
+                                                <option>Select Signee...</option>
+                                                <option ng-repeat="party in contract.parties" value="{{party.user.id}}">
+                                                    {{party.user.firstName}}
+                                                </option>
+                                            </select>
+                                        </div>
+                                        <p>
+                                            <label class="md-switch">
+                                            <input class="has-value" type="checkbox">
+                                            <i class="green"></i>
+                                            Make mandatory
+                                            </label>
+                                        </p>
+
+                                        <div>
+                                            <button class="btn btn-poup btn-primary m-r-sm" ng-click="hideElement()">OK</button>
+                                            <button class="btn btn-poup secondary" ng-click="removeElement()">Remove</button>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div id="popup-container3" class="popover popover-sign popover-right popup_style">
+                                    <div class="arrow">
+                                    </div>
+                                    <h3 class="popover-title">Select Name</h3>
+                                    <div class="popover-content">
+                                        <div class="btn-group dropdown">
+                                            <select id="NAME" class="selection-element">
+                                                <option>Select Signee...</option>
+                                                <option ng-repeat="party in contract.parties" value="{{party.user.id}}">
+                                                    {{party.user.firstName}}
+                                                </option>
+                                            </select>
+                                        </div>
+                                        <p>
+                                            <label class="md-switch">
+                                            <input class="has-value" type="checkbox">
+                                            <i class="green"></i>
+                                            Make mandatory
+                                            </label>
+                                        </p>
+
+                                        <div>
+                                            <button class="btn btn-poup btn-primary m-r-sm" ng-click="hideElement()">OK</button>
+                                            <button class="btn btn-poup secondary" ng-click="removeElement()">Remove</button>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div id="popup-container4" class="popover popover-sign popover-right popup_style">
+                                    <div class="arrow">
+                                    </div>
+                                    <h3 class="popover-title">Select Party</h3>
+                                    <div class="popover-content">
+                                        <div class="btn-group dropdown">
+                                             <select id="DATE" class="selection-element">
+                                                <option>Select Signee...</option>
+                                                <option ng-repeat="party in contract.parties" value="{{party.user.id}}">
+                                                    {{party.user.firstName}}
+                                                </option>
+                                            </select>
+                                        </div>
+                                        <p>
+                                            <label class="md-switch">
+                                            <input class="has-value" type="checkbox">
+                                            <i class="green"></i>
+                                            Make mandatory
+                                            </label>
+                                        </p>
+
+                                        <div>
+                                            <button class="btn btn-poup btn-primary m-r-sm" ng-click="hideElement()">OK</button>
+                                            <button class="btn btn-poup secondary" ng-click="removeElement()">Remove</button>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div id="popup-container5" class="popover popover-sign popover-right popup_style">
+                                    <div class="arrow">
+                                    </div>
+                                    <!--<h3 class="popover-title">Select Party</h3>-->
+                                    <div class="popover-content">
+                                        <!--<div class="btn-group dropdown">
+                                             <select id="FREE_TEXT" class="selection-element">
+                                                <option>Select Signee...</option>
+                                                <option ng-repeat="party in contract.parties" value="{{party.user.id}}">
+                                                    {{party.user.firstName}}
+                                                </option>
+                                            </select>
+                                        </div>-->
+                                        <p>
+                                            <label class="md-switch">
+                                            <input class="has-value" type="checkbox">
+                                            <i class="green"></i>
+                                            Make mandatory
+                                            </label>
+                                        </p>
+
+                                        <div>
+                                            <button class="btn btn-poup btn-primary m-r-sm" ng-click="hideElement()">OK</button>
+                                            <button class="btn btn-poup secondary" ng-click="removeElement()">Remove</button>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div id="popup-container6" class="popover popover-sign popover-right popup_style">
+                                    <div class="arrow">
+                                    </div>
+                                    <h3 class="popover-title">Select Party</h3>
+                                    <div class="popover-content">
+                                        <div class="btn-group dropdown">
+                                             <select id="CHECK_BOX" class="selection-element">
+                                                <option>Select Signee...</option>
+                                                <option ng-repeat="party in contract.parties" value="{{party.user.id}}">
+                                                    {{party.user.firstName}}
+                                                </option>
+                                            </select>
+                                        </div>
+                                        <p>
+                                            <label class="md-switch">
+                                            <input class="has-value" type="checkbox">
+                                            <i class="green"></i>
+                                            Make mandatory
+                                            </label>
+                                        </p>
+
+                                        <div>
+                                            <button class="btn btn-poup btn-primary m-r-sm" ng-click="hideElement()">OK</button>
+                                            <button class="btn btn-poup secondary" ng-click="removeElement()">Remove</button>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div id="popup-container7" class="popover popover-sign popover-right popup_style">
+                                    <div class="arrow">
+                                    </div>
+                                    <h3 class="popover-title">Select Party</h3>
+                                    <div class="popover-content">
+                                        <div class="btn-group dropdown">
+                                             <select id="UPLOAD" class="selection-element">
+                                                <option>Select Signee...</option>
+                                                <option ng-repeat="party in contract.parties" value="{{party.user.id}}">
+                                                    {{party.user.firstName}}
+                                                </option>
+                                            </select>
+                                        </div>
+                                        <p>
+                                            <label class="md-switch">
+                                            <input class="has-value" type="checkbox">
+                                            <i class="green"></i>
+                                            Make mandatory
+                                            </label>
+                                        </p>
+
+                                        <div>
+                                            <button class="btn btn-poup btn-primary m-r-sm" ng-click="hideElement()">OK</button>
+                                            <button class="btn btn-poup secondary" ng-click="removeElement()">Remove</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!--  pdf Viewer -->
+                            <div class="row mb20">
+                                <div class="col-md-12" id="dropp">
+                                    <div class="document-sign">
+                                        <div class="document-content">
+                                            <div class="droppable" ng-repeat="thumbnail in thumbnails track by $index" class="ui segment" id="{{$index+1}}">
+                                                <img width="100%" ; height="auto" src="http://staging-1.crossdottr.com/files/{{thumbnail.name}}">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row" ng-if="contract.status=='DRAFT'">
+                                <div class="page-action col-md-12">
+                                    <!-- <a href="creator-step1.html" class="btn secondary">Back</a> -->
+                                    <button ng-click="updateContract()" class="btn success">Review <i class="material-icons md-24"></i></button>
+                                    <a href="/#!/contracts/all" class="btn secondary">Cancel</a>
+                                </div>
+                            </div>
+                            <!-- <div style="width: 100%; float: left;">
+                                    <div class="droppable" ng-repeat="thumbnail in thumbnails track by $index" class="ui segment" style="width:100%;float: left;clear:both;background-repeat:no-repeat;background-image: url( 'http://staging-1.crossdottr.com/files/{{thumbnail.name}}')" id="{{$index+1}}">
+                                    </div>
+                                </div> -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--  <aside class="four wide computer sixteen wide tablet column">
+                <time-line *ngIf="contractId" contractId="{{contractId}}"></time-line>
+            </aside> -->
+        </div>
+    </div>
+</div>
