@@ -105,10 +105,11 @@
 
             <div class="mt15">
                 <label class="md-switch">
-                <input class="has-value" type="checkbox">
+                <input class="has-value" type="checkbox" name ='chooseExpiry' ng-model='chooseExpiry'>
                 <i class="blue"></i>
-                <font class="text-toggle">Expiry Date (Dec 20, 2016) [cal-icon]</font>
-                <br><label class="toggle-ftr">Change the order by dragging names around</label>
+                <font ng-if='chooseExpiry' class="text-toggle">Expiry Date ({{expiryDate}}) <span  class="fa fa-calendar" ms-date-time-picker ng-model="expiryDate" aria-hidden="true"></span></font>
+                <font ng-if='!chooseExpiry' class="text-toggle">No Expiry</font>
+                <br><label class="toggle-ftr">Change the expiry date from calendar</label>
                 </label>
             </div>
 

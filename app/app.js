@@ -9,7 +9,8 @@ angular.module('myApp', [
     'myApp.createContract',
     'myApp.signContract',
     'myApp.activity',
-    'myApp.version'
+    'myApp.version',
+    'myApp.commonComponent'
 ]).
 config(['$locationProvider', '$routeProvider', function($locationProvider, $routeProvider, $rootScope) {
    $locationProvider.hashPrefix('!');
