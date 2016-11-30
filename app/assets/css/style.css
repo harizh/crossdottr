@@ -3248,3 +3248,18 @@ input:checked + .slider:before {
     margin-left: 10px; 
     color: #808093;
 }
+.ui-sortable-placeholder {
+  border: 3px dashed green;
+  height: 45px;
+  width: 100%;
+  background: white;
+}
+.ui-state-default, 
+.ui-widget-content 
+.ui-state-default, 
+.ui-widget-header 
+.ui-state-default{
+    border: none;
+    background-color: white;
+    cursor: move;
+}

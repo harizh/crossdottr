@@ -120,6 +120,43 @@ angular.module('myApp.createContract', ['ngRoute'])
         $scope.fullName = '';
         $scope.expiryDate = moment(new Date(), "DD-MM-YYYY").add(30,'days').format("DD MMMM YYYY H:m:s");
         $scope.chooseExpiry = false;
+        $scope.viewSignee={
+            name:'',
+            email:''
+        }
+        $scope.signeeList = [{
+                id:1,
+                name:'asdasdasdasd',
+                email:'asdas@dfsd.sdsds'
+            },{
+                id:2,
+                name:'asdasdasdasd2',
+                email:'asdas2@dfsd.sdsds'
+            },{
+                id:3,
+                name:'asdasdasdasd3',
+                email:'asdas3@dfsd.sdsds'
+            }];
+        var signeeId=1;
+        $scope.addSignee = function(){
+            $scope.signeeList.push({
+                id:signeeId,
+                name:$scope.viewSignee.name,
+                email:$scope.viewSignee.email
+            });
+            $scope.viewSignee.name = '';
+            $scope.viewSignee.email = '';
+            signeeId++;
+        };
+        $scope.makeSortable = function(){
+            $( "#sortable" ).sortable({ 
+                placeholder: "ui-sortable-placeholder",
+                update:function(event, ui){
+                    console.log('event',event);
+                    console.log('ui', ui);
+                }
+            });
+        };
 
         $scope.addPartyFileds = function() {
             var htmlTemplate = '<div class="box-body white mb20 party-field-container">';

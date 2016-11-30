@@ -52,47 +52,56 @@
 
         <div class="box white">
                                  
-            <form role="form" id="party-form" style="margin-top: 20px;">
                 <div class="box-body white mb20 party-field-container">
                     
-                    <div class="form-group">
-                        <label for="name1">Name & Email</label>
-                        <div class="input-group">
-                            <div class="input-group-addon">
-                                <i class="glyphicon glyphicon-user" aria-hidden="true"></i>
+                    <div id="sortable" class="form-group">
+                        <div class="ui-state-default" repeat-done="makeSortable()" ng-repeat='signee in signeeList track by signee.id'>
+                            <div class="input-group">
+                                <div class="input-group-addon" 
+                                    style="border: none;padding:5px">
+                                    <i class="form-control-feedback glyphicon glyphicon-user"
+                                    style="padding: 11px;border-radius: 50%;border: 1px solid rgba(0,0,0,0.5);"></i>
+                                </div>
+                                <p class="form-control name field-style" 
+                                style="padding:0;min-height: 1px;border: none;background: white;font-size: 30px;font-weight: bold;"
+                                >{{signee.name}}</p>
+                                <p class="form-control email field-style" 
+                                style="padding:0;min-height: 1px;border: none;background: white;font-size: 10px;font-weight: bold;"
+                                >{{signee.email}}</p>
                             </div>
-                            <input trequired ype="text" class="form-control firstname" id="name1" value="" placeholder="Full name" required="">
-                        </div>
-
-                    </div>
-
-
-                    <!-- <div class="form-group">
-                        <div class="input-group">
-                            <div class="input-group-addon">
-                                <i class="glyphicon glyphicon-star-empty" aria-hidden="true"></i>
-                            </div>
-                            <input required type="text" class="form-control lastname" id="name2" value="" placeholder="Last name" required="">
-                        </div>
-                    </div> -->
-
-                    <div class="form-group">
-                        <div class="input-group">
-                            <div class="input-group-addon">
-                                <i class="form-control-feedback glyphicon glyphicon-envelope"></i>
-                            </div>
-                            <input type="email" required class="form-control email field-style" id="email1" value="" placeholder="Their Email">
+                            <hr>
                         </div>
                     </div>
+                    <form role="form" id="party-form" style="margin-top: 20px;"                                 ng-submit="addSignee()">
+                        <div class="form-group">
+                            <div class="input-group">
+                                <div class="input-group-addon">
+                                    <i class="glyphicon glyphicon-user" aria-hidden="true"></i>
+                                </div>
+                                <input trequired ype="text" class="form-control firstname"
+                                    ng-model='viewSignee.name'
+                                 id="name1" value="" placeholder="Full name" required="">
+                            </div>
 
+                        </div>
+
+                        <div class="form-group">
+                            <div class="input-group">
+                                <div class="input-group-addon">
+                                    <i class="form-control-feedback glyphicon glyphicon-envelope"></i>
+                                </div>
+                                <input type="email" required
+                                ng-model='viewSignee.email'
+                                 class="form-control email field-style" id="email1" value="" placeholder="Their Email">
+                            </div>
+                            <div class="input-group">                     
+                                <input type="submit" class="btn btn-default style-button" 
+                                 value="+ Add another Signer">
+                            </div>
+                        </div>
+                    </form>
                     
                 </div>
-
-            </form>
-
-            
-
-            <input type="submit" class="btn btn-default style-button" ng-click="addPartyFileds();" value="+ Add another Signer">
             <hr>
             <div class="mt15">
                 <label class="md-switch">
