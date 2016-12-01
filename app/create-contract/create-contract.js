@@ -118,8 +118,10 @@ angular.module('myApp.createContract', ['ngRoute'])
         $scope.contractName = '';
         $scope.email = '';
         $scope.fullName = '';
-        $scope.expiryDate = null;
-        $scope.chooseExpiry = false;
+        $scope.document ={
+            expiryDate :null,
+            chooseExpiry:false
+        }
         $scope.viewSignee={
             name:'',
             email:''

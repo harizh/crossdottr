@@ -3249,8 +3249,8 @@ input:checked + .slider:before {
     color: #808093;
 }
 .ui-sortable-placeholder {
-  border: 3px dashed green;
-  height: 45px;
+  border: 2px dashed #b7d4f6;
+  height: 15px;
   width: 100%;
   background: white;
 }
