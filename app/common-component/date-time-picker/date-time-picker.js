@@ -28,6 +28,9 @@ angular.module('myApp.commonComponent')
                         options.onGenerate =function( ct ){
 						    place(jQuery(this));
 						}
+                    if(ngModelController.$modelValue){
+                        options.defaultDate = ngModelController.$modelValue;
+                    }
 
                     options.onChangeDateTime = function (dt, $input, e) {
                         ngModelController.$setViewValue($dateFilter(dt, 'dd MMMM yyyy H:m:s'));

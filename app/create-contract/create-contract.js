@@ -118,7 +118,7 @@ angular.module('myApp.createContract', ['ngRoute'])
         $scope.contractName = '';
         $scope.email = '';
         $scope.fullName = '';
-        $scope.expiryDate = moment(new Date(), "DD-MM-YYYY").add(30,'days').format("DD MMMM YYYY H:m:s");
+        $scope.expiryDate = null;
         $scope.chooseExpiry = false;
         $scope.viewSignee={
             name:'',
@@ -126,26 +126,16 @@ angular.module('myApp.createContract', ['ngRoute'])
         }
         $scope.signeeList = [{
                 id:1,
-                name:'asdasdasdasd',
-                email:'asdas@dfsd.sdsds'
-            },{
-                id:2,
-                name:'asdasdasdasd2',
-                email:'asdas2@dfsd.sdsds'
-            },{
-                id:3,
-                name:'asdasdasdasd3',
-                email:'asdas3@dfsd.sdsds'
+                name:'',
+                email:''
             }];
-        var signeeId=1;
-        $scope.addSignee = function(){
+        var signeeId=2;
+        $scope.addSigneeForm = function(){
             $scope.signeeList.push({
                 id:signeeId,
-                name:$scope.viewSignee.name,
-                email:$scope.viewSignee.email
+                name:'',
+                email:''
             });
-            $scope.viewSignee.name = '';
-            $scope.viewSignee.email = '';
             signeeId++;
         };
         $scope.makeSortable = function(){

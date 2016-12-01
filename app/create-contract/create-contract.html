@@ -51,27 +51,9 @@
         </div>
 
         <div class="box white">
-                                 
-                <div class="box-body white mb20 party-field-container">
-                    
-                    <div id="sortable" class="form-group">
-                        <div class="ui-state-default" repeat-done="makeSortable()" ng-repeat='signee in signeeList track by signee.id'>
-                            <div class="input-group">
-                                <div class="input-group-addon" 
-                                    style="border: none;padding:5px">
-                                    <i class="form-control-feedback glyphicon glyphicon-user"
-                                    style="padding: 11px;border-radius: 50%;border: 1px solid rgba(0,0,0,0.5);"></i>
-                                </div>
-                                <p class="form-control name field-style" 
-                                style="padding:0;min-height: 1px;border: none;background: white;font-size: 30px;font-weight: bold;"
-                                >{{signee.name}}</p>
-                                <p class="form-control email field-style" 
-                                style="padding:0;min-height: 1px;border: none;background: white;font-size: 10px;font-weight: bold;"
-                                >{{signee.email}}</p>
-                            </div>
-                            <hr>
-                        </div>
-                    </div>
+                    <div id='sortable'>             
+                <div class="ui-state-default box-body white mb20 party-field-container"
+                repeat-done="makeSortable()" ng-repeat='signee in signeeList track by signee.id'>
                     <form role="form" id="party-form" style="margin-top: 20px;"                                 ng-submit="addSignee()">
                         <div class="form-group">
                             <div class="input-group">
@@ -79,7 +61,7 @@
                                     <i class="glyphicon glyphicon-user" aria-hidden="true"></i>
                                 </div>
                                 <input trequired ype="text" class="form-control firstname"
-                                    ng-model='viewSignee.name'
+                                    ng-model='signee.name'
                                  id="name1" value="" placeholder="Full name" required="">
                             </div>
 
@@ -91,17 +73,21 @@
                                     <i class="form-control-feedback glyphicon glyphicon-envelope"></i>
                                 </div>
                                 <input type="email" required
-                                ng-model='viewSignee.email'
+                                ng-model='signee.email'
                                  class="form-control email field-style" id="email1" value="" placeholder="Their Email">
                             </div>
-                            <div class="input-group">                     
-                                <input type="submit" class="btn btn-default style-button" 
-                                 value="+ Add another Signer">
-                            </div>
                         </div>
-                    </form>
-                    
+                        <div class="input-group">   
+                            <button type="button" class="btn btn-default style-button"><i class="fa fa-trash-o" aria-hidden="true"></i>Remove Signer</button>
+                        </div>   
+                    </form>                 
                 </div>
+                </div>
+                <div class="input-group">                     
+                    <input type="button" class="btn btn-default style-button"
+                    ng-click='addSigneeForm()'
+                     value="+ Add another Signer">
+                </div>   
             <hr>
             <div class="mt15">
                 <label class="md-switch">
@@ -116,7 +102,8 @@
                 <label class="md-switch">
                 <input class="has-value" type="checkbox" name ='chooseExpiry' ng-model='chooseExpiry'>
                 <i class="blue"></i>
-                <font ng-if='chooseExpiry' class="text-toggle">Will expire on:<br> ({{expiryDate}}) <span  class="fa fa-calendar" ms-date-time-picker ng-model="expiryDate" aria-hidden="true"></span></font>
+                <font ng-if='chooseExpiry&&!expiryDate' class="text-toggle">Pick Expiry Date<span  class="fa fa-calendar" ms-date-time-picker ng-model="expiryDate" aria-hidden="true"></span></font>
+                <font ng-if='chooseExpiry&&expiryDate' class="text-toggle">Will expire on:<br> ({{expiryDate}}) <span  class="fa fa-calendar" ms-date-time-picker ng-model="expiryDate" aria-hidden="true"></span></font>
                 <font ng-if='!chooseExpiry' class="text-toggle">No Expiry</font>
                 <br><label class="toggle-ftr">Change the expiry date from calendar</label>
                 </label>
