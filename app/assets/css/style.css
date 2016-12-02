@@ -3260,5 +3260,7 @@ input:checked + .slider:before {
 .ui-widget-header 
 .ui-state-default{
     background-color: white;
+}
+.enable .ui-state-default{
     cursor: move;
 }

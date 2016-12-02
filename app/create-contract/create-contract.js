@@ -140,14 +140,35 @@ angular.module('myApp.createContract', ['ngRoute'])
             });
             signeeId++;
         };
+        $scope.view= {
+            init:false,
+            chooseSigningOrder:  false
+        };
+        $scope.toggleChooseSigningOrder = function(){
+            console.log($scope.view.chooseSigningOrder);
+            $scope.makeSortable();
+        }
         $scope.makeSortable = function(){
-            $( "#sortable" ).sortable({ 
-                placeholder: "ui-sortable-placeholder",
-                update:function(event, ui){
-                    console.log('event',event);
-                    console.log('ui', ui);
-                }
-            });
+            if(!$scope.view.init){
+                $( "#sortable" ).sortable({ 
+                    placeholder: "ui-sortable-placeholder",
+                    update:function(event, ui){
+                        console.log('event',event);
+                        console.log('ui', ui);
+                    }
+                });
+                $scope.view.init = true;
+            }
+            if($scope.view.chooseSigningOrder){
+                $( "#sortable" ).sortable( "enable");
+                $( "#sortable" ).disableSelection();
+                $( "#sortable" ).removeClass('disable');
+                $( "#sortable" ).addClass('enable');
+            }else{
+                $( "#sortable" ).sortable("disable");
+                $( "#sortable" ).removeClass('enable');
+                $( "#sortable" ).addClass('disable');
+            }
         };
 
         $scope.addPartyFileds = function() {

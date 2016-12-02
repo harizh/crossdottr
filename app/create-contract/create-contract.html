@@ -91,7 +91,7 @@
             <hr>
             <div class="mt15">
                 <label class="md-switch">
-                <input class="has-value" type="checkbox">
+                <input ng-change='toggleChooseSigningOrder()' ng-model='view.chooseSigningOrder' class="has-value" type="checkbox">
                 <i class="blue"></i>
                 <font class="text-toggle">Let Me Choose the Signing Order</font>
                 <br><label class="toggle-ftr">Change the order by dragging names around</label>
