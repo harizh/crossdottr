@@ -140,6 +140,11 @@ angular.module('myApp.createContract', ['ngRoute'])
             });
             signeeId++;
         };
+        $scope.removeSigneeForm = function(id){
+            _.remove($scope.signeeList, {
+                id: id
+            });
+        }
         $scope.view= {
             init:false,
             chooseSigningOrder:  false
