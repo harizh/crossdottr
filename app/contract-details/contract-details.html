@@ -119,15 +119,22 @@ text-align: center">Documents / {{contract.name}}</span>
                                         </div>
                                     </div>
                                 </div>
-                                  <div id="popup-container1" class="popover popover-sign popover-right popup_style">
+                                  <div id="popup-container1"
+                                   data-type="signature"
+                                   class="popover popover-sign popover-right popup_style">
                                     <div class="arrow">
                                     </div>
                                     <h3 class="popover-title">Who Signs?</h3>
                                     <div class="popover-content">
                                         <div class="btn-group dropdown">
-                                            <select id="SIGNATURE" class="selection-element">
-                                               <option>Select Signee...</option>
-                                                <option ng-repeat="party in contract.parties" value="{{party.user.id}}">{{party.user.firstName}}
+                                            <select id="SIGNATURE"
+                                            ng-change="selectSignee(selectedDroppables)"
+                                            ng-model="signature[selectedDroppables].selectedSignee"
+                                            class="selection-element">
+                                               <option value=''>Select Signee...</option>
+                                               <option ng-repeat="party in contract.parties" 
+                                                ng-selected="signature[selectedDroppables].selectedSignee == party.user.id"
+                                                value="{{party.user.id}}">{{party.user.firstName}}
                                                 </option>
                                             </select>
                                         </div>

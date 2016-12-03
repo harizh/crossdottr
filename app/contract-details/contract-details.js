@@ -9,7 +9,7 @@ angular.module('myApp.contractDetails', ['ngRoute'])
             controllerAs: 'vm'
         });
     }])
-    .controller('ContractDetailCtrl', function($scope, $http, $rootScope, $routeParams, httpRequestService, $window) {
+    .controller('ContractDetailCtrl', function($timeout,$scope, $http, $rootScope, $routeParams, httpRequestService, $window) {
         var vm = this;
 
 
@@ -128,10 +128,19 @@ angular.module('myApp.contractDetails', ['ngRoute'])
                                         };
 
                                         this.x.attr('position', originalX + '-' + originalY + '-' + angular.element(ui.draggable)[0].id + '-' + thisId + '-' + $scope.contractDetails.document.id)
-                                        this.x.attr('id', generateRandomString(10).trim());
+                                        var attrId = generateRandomString(10).trim();
+                                        this.x.attr('id', attrId);
+                                        if(this.x.attr('data-type')=='signature'){
+                                            $scope.signature[attrId]={
+                                                id:attrId
+                                            };
+                                        }
                                         jQuery('body').on('click', this.x, function(event) {
                                             $scope.selectedDroppables = jQuery(event.target).parents('.droppables').attr('id');
-                                            console.log('$scope.selectedDroppables', $scope.selectedDroppables, event);
+                                            $timeout(function() {
+                                                 $scope.$apply();
+                                              }, 0);
+                                            //console.log('$scope.selectedDroppables', $scope.selectedDroppables, event);
                                         });
 
                                         var mr = 0;
@@ -175,6 +184,11 @@ angular.module('myApp.contractDetails', ['ngRoute'])
             angular.element("#" + $scope.selectedDroppables).remove();
             angular.element('.popup_style').hide();
         };
+        $scope.signature = [];
+        $scope.selectSignee = function(dropable){
+            console.log("dropable",dropable);
+            console.log("$scope.signature[dropable].selectedSignee",$scope.signature[dropable].selectedSignee);
+        }
 
         $scope.updateContract = function() {
             var valid = true;
