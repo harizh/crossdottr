@@ -103,6 +103,13 @@ angular.module('myApp.signContract', ['ngRoute'])
 
             }
         });
+        $scope.sign={
+            file : {}
+        };
+        $scope.$watch('sign.files', function () {
+            console.log($scope.sign.files);
+            //$scope.upload($scope.files);
+        });
         $scope.showSignaturePad = function(id) {
             angular.element('.overlay').show()
             var top = parseInt(angular.element('#' + id).parent().css('top')) + 130,

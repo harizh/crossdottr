@@ -3264,3 +3264,22 @@ input:checked + .slider:before {
 .enable .ui-state-default{
     cursor: move;
 }
+.nav-tabs .nav-item.active .nav-link, 
+.nav-tabs .nav-item.active .nav-link:hover, 
+.nav-tabs .nav-item.active .nav-link:focus {
+    border-bottom: 2px solid #0C77F8;
+    color: #494A4E;
+}
+.m-signature-pad--body canvas{
+    cursor: cell;
+}
+.drop-box{
+    text-align: center;
+    vertical-align: middle;
+    padding: 13%;
+    font-size: 20px;
+}
+.drop-box.dragover{
+    border:2px dashed #456345;
+    background-color: aliceblue;
+}
