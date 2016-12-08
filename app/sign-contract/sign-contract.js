@@ -18,10 +18,9 @@ angular.module('myApp.signContract', ['ngRoute'])
         }, 50);
 
 
-        var wrapper = document.getElementById("signature-pad"),
+        var wrapper = document.getElementById("signature-container"),
             clearButton = wrapper.querySelector("[data-action=clear]"),
             saveButton = wrapper.querySelector("[data-action=save]"),
-            closeButton = wrapper.querySelector("[data-action=close]"),
             canvas = wrapper.querySelector("canvas"),
             signaturePad;
 
@@ -47,10 +46,10 @@ angular.module('myApp.signContract', ['ngRoute'])
             signaturePad.clear();
         });
 
-        closeButton.addEventListener("click", function(event) {
-            angular.element('#signature-container').css('visibility', 'hidden').css('height', '0');
-            angular.element('.overlay').hide()
-        });
+        // closeButton.addEventListener("click", function(event) {
+        //     angular.element('#signature-container').css('visibility', 'hidden').css('height', '0');
+        //     angular.element('.overlay').hide()
+        // });
 
         saveButton.addEventListener("click", function(event) {
             if (signaturePad.isEmpty()) {
@@ -111,11 +110,11 @@ angular.module('myApp.signContract', ['ngRoute'])
             //$scope.upload($scope.files);
         });
         $scope.showSignaturePad = function(id) {
-            angular.element('.overlay').show()
-            var top = parseInt(angular.element('#' + id).parent().css('top')) + 130,
-                left = angular.element('#' + id).parent().css('left')
-            angular.element('#signature-container').css('visibility', 'visible').css('height', 'auto');
-            angular.element('.popup_style').hide();
+            // angular.element('.overlay').show()
+            // var top = parseInt(angular.element('#' + id).parent().css('top')) + 130,
+            //     left = angular.element('#' + id).parent().css('left')
+            // angular.element('#signature-container').css('visibility', 'visible').css('height', 'auto');
+            // angular.element('.popup_style').hide();
         }
         $scope.saveText = function(id) {
             var formData = {
