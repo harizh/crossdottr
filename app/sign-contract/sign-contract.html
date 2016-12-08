@@ -22,7 +22,7 @@
                             </a>
                         </li>
                         <li class="nav-item" role="presentation">
-                            <a class="nav-link" data-target="#draw" aria-controls="draw" role="tab" data-toggle="tab">Draw Signature</a>
+                            <a class="nav-link" ng-click='resizeCanvas()' data-target="#draw" aria-controls="draw" role="tab" data-toggle="tab">Draw Signature</a>
                         </li>
                         <li class="nav-item" role="presentation">
                             <a class="nav-link" data-target="#upload" aria-controls="upload" role="tab" data-toggle="tab">Upload File</a>
@@ -32,7 +32,7 @@
                             <div role="tabpanel" class="tab-pane active" id="type"></div>
                             <div role="tabpanel" class="tab-pane" id="draw">
                                 <div class="m-signature-pad--body">
-                                    <canvas width="100px" height="100px"></canvas>
+                                    <canvas style="display: block;float: left"></canvas>
                                 </div>
                                 <div class="m-t-sm" style="font-size: 14px;">
                                     <span class="text-muted">Draw your signature above the line</span>
