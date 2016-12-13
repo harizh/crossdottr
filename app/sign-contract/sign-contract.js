@@ -18,28 +18,36 @@ angular.module('myApp.signContract', ['ngRoute'])
         }, 50);
 
 
+        // var wrapper = document.getElementById("signature-pad"),
         var wrapper = document.getElementById("signature-container"),
             clearButton = wrapper.querySelector("[data-action=clear]"),
             saveButton = wrapper.querySelector("[data-action=save]"),
+            // closeButton = wrapper.querySelector("[data-action=close]"),
             canvas = wrapper.querySelector("canvas"),
             signaturePad;
 
         // Adjust canvas coordinate space taking into account pixel ratio,
         // to make it look crisp on mobile devices.
         // This also causes canvas to be cleared.
-        $scope.resizeCanvas = function() {
+        /*function resizeCanvas() {
             // When zoomed out to less than 100%, for some very strange reason,
             // some browsers report devicePixelRatio as less than 1
             // and only part of the canvas is cleared then.
+            var ratio = Math.max(window.devicePixelRatio || 1, 1);
+            canvas.width = canvas.offsetWidth * ratio;
+            canvas.height = canvas.offsetHeight * ratio;
+            canvas.getContext("2d").scale(ratio, ratio);
+        }*/
+        $scope.resizeCanvas = function() {
             if(canvas.offsetWidth==0){
-                $timeout($scope.resizeCanvas,200)
-            }else{            
-                var ratio = Math.max(window.devicePixelRatio || 1, 1);
-                canvas.width = canvas.offsetWidth * ratio;
-                canvas.height = canvas.offsetHeight * ratio;
-                canvas.getContext("2d").scale(ratio, ratio);
-            }
-        }
+             $timeout($scope.resizeCanvas,200)
+             }else{
+            var ratio = Math.max(window.devicePixelRatio || 1, 1);
+             canvas.width = canvas.offsetWidth * ratio;
+             canvas.height = canvas.offsetHeight * ratio;
+             canvas.getContext("2d").scale(ratio, ratio);
+             }
+         }
 
         window.onresize = $scope.resizeCanvas;
         $scope.resizeCanvas();
@@ -96,9 +104,8 @@ angular.module('myApp.signContract', ['ngRoute'])
                     httpRequestService.post('/party/token/' + $routeParams.token + '/field/' + id + '/json/object', formData)
                         .success(function(response) {
                             console.log(1, response);
-                            //angular.element('#signature-container').css('visibility', 'hidden').css('height', '0')
-                            //angular.element('.overlay').hide();
-                            $('#signature-container').modal('hide');
+                            angular.element('#signature-container').css('visibility', 'hidden').css('height', '0')
+                            angular.element('.overlay').hide()
 
                         })
                 } else {
@@ -107,14 +114,46 @@ angular.module('myApp.signContract', ['ngRoute'])
 
             }
         });
+        $scope.setAllura=function()
+        {
+            var myEl = angular.element( document.querySelector( '#divID' ) );
+            myEl.css('font-family','Allura');     
+        }
+
+        $scope.setKaushan=function()
+        {
+            var myEl = angular.element( document.querySelector( '#divID' ) );
+            myEl.css('font-family','Kaushan Script');     
+        }
+
+        $scope.setMarck=function()
+        {
+            var myEl = angular.element( document.querySelector( '#divID' ) );
+            myEl.css('font-family','Marck Script');     
+        }
+
+        $scope.setDancing=function()
+        {
+            var myEl = angular.element( document.querySelector( '#divID' ) );
+            myEl.css('font-family','Dancing Script');     
+        }
+        $scope.signame = 'Barrington Russel';
+
         $scope.sign={
             file : {}
         };
+        
+        
         $scope.$watch('sign.files', function () {
             console.log($scope.sign.files);
             //$scope.upload($scope.files);
         });
         $scope.showSignaturePad = function(id) {
+            // angular.element('.overlay').show()
+            // var top = parseInt(angular.element('#' + id).parent().css('top')) + 130,
+            //     left = angular.element('#' + id).parent().css('left')
+            // angular.element('#signature-container').css('visibility', 'visible').css('height', 'auto');
+            // angular.element('.popup_style').hide();
         }
         $scope.saveText = function(id) {
             var formData = {
