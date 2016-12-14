@@ -160,6 +160,9 @@
                             <img ng-if='sign.proof' 
                                  ngf-src="sign.proof" 
                                  style="width: auto;height: 35px;">
+                            <span ng-if='sign.proof' 
+                                ng-click='sign.proof=null' 
+                                style="cursor:pointer;background-color: antiquewhite;color: red">X</span>
                         </span>
                         <input type="text" ng-if="filed.fieldType == 'DATE' " id="{{filed.id}}" ng-blur="saveText(filed.id);" ng-model="filedVal[filed.fieldType]" readonly style="width:{{filed.minWidth}}px;height:{{filed.minHeight}}px;">
                     </span>
