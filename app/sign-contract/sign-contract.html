@@ -82,23 +82,35 @@
             <div class="document-sign">
                 <div class="document-content">
                     <img ng-repeat="thumbnail in thumbnails track by $index" src="http://staging-1.crossdottr.com/files/{{thumbnail.name}}" class="img-responsive">
-                    <span ng-repeat="filed in fileds track by $index" style="position: absolute; top:{{filed.yOrigin}}px; left: {{filed.xOrigin}}px;border: 2px solid green;">
-                    <span ng-if="filed.fieldType == 'SIGNATURE'" 
-                        ng-click="showSignaturePad(filed.id)"
-                        data-toggle="modal" data-target="#signature-container"
-                        id="{{filed.id}}" class="{{filed.fieldType}} sign-holder btn" style="width:{{filed.minWidth}}px;height:{{filed.minHeight}}px; padding:0;">
-                        <span style="width:{{filed.minWidth}}px;height:{{filed.minHeight}}px;" ng-if="!utl" id="sign-text">{{filed.fieldType}}</span>
-                    <img id="img-tag" src="{{utl}}" ng-if="utl" style="width:{{filed.minWidth}}px;height:{{filed.minHeight}}px;">
-                    </span>
-                    <input type="text" ng-if="filed.fieldType == 'NAME'" id="{{filed.id}}" ng-blur="saveText(filed.id);" value="{{filed.text}}" ng-readonly="filed.text" style="width:{{filed.minWidth}}px;height:{{filed.minHeight}}px;" placeholder="NAME">
-                        
-                    <input type="text" ng-if="filed.fieldType == 'FREE_TEXT'" id="{{filed.id}}" ng-blur="saveText(filed.id);" value="{{filed.text}}" ng-readonly="filed.text" style="width:{{filed.minWidth}}px;height:{{filed.minHeight}}px;" placeholder="FREE_TEXT">
-                        
-                    <input type="text" ng-if="filed.fieldType == 'INITIALS'" id="{{filed.id}}" ng-blur="saveText(filed.id);" value="{{filed.text}}" ng-readonly="filed.text" style="width:{{filed.minWidth}}px;height:{{filed.minHeight}}px;" placeholder="INITIALS">
-                        
-                        
-                    <input type="file" ng-if="filed.fieldType == 'FILE_UPLOAD'" class="upload-file" id="{{filed.id}}" onchange="angular.element(this).scope().saveFile(this.files)" style="width:{{filed.minWidth}}px;height:{{filed.minHeight}}px;">
-                    <input type="text" ng-if="filed.fieldType == 'DATE' " id="{{filed.id}}" ng-blur="saveText(filed.id);" ng-model="filedVal[filed.fieldType]" readonly style="width:{{filed.minWidth}}px;height:{{filed.minHeight}}px;">
+                    <span ng-repeat="filed in fileds track by $index" style="position: absolute; top:{{filed.yOrigin}}px; left: {{filed.xOrigin}}px;border: 1px dashed #5abf5a;">
+                        <span ng-if="filed.fieldType == 'SIGNATURE'" 
+                            ng-click="showSignaturePad(filed.id)"
+                            data-toggle="modal" data-target="#signature-container"
+                            id="{{filed.id}}" class="{{filed.fieldType}} sign-holder btn" style="width:{{filed.minWidth}}px;height:{{filed.minHeight}}px; padding:0;">
+                            <span style="width:{{filed.minWidth}}px;height:{{filed.minHeight}}px;" ng-if="!utl" id="sign-text">{{filed.fieldType}}</span>
+                        <img id="img-tag" src="{{utl}}" ng-if="utl" style="width:{{filed.minWidth}}px;height:{{filed.minHeight}}px;">
+                        </span>
+                        <input type="text" ng-if="filed.fieldType == 'NAME'" id="{{filed.id}}" ng-blur="saveText(filed.id);" value="{{filed.text}}" ng-readonly="filed.text" style="width:{{filed.minWidth}}px;height:{{filed.minHeight}}px;" placeholder="NAME">
+                            
+                        <input type="text" ng-if="filed.fieldType == 'FREE_TEXT'" id="{{filed.id}}" ng-blur="saveText(filed.id);" value="{{filed.text}}" ng-readonly="filed.text" style="width:{{filed.minWidth}}px;height:{{filed.minHeight}}px;" placeholder="FREE_TEXT">
+                            
+                        <input type="text" ng-if="filed.fieldType == 'INITIALS'" id="{{filed.id}}" ng-blur="saveText(filed.id);" value="{{filed.text}}" ng-readonly="filed.text" style="width:{{filed.minWidth}}px;height:{{filed.minHeight}}px;" placeholder="INITIALS">
+                            
+                        <span ng-if="filed.fieldType == 'FILE_UPLOAD'"
+                            style="padding: 9px;color: #85c05a;display: block;" >
+                            <i class="fa fa-cloud-upload" aria-hidden="true"></i>
+                            <span style="padding-right: 34px;">Upload your Id</span>
+                            <button ng-if='!sign.proof'
+                                class="btn btn-success"
+                                ng-model="sign.proof" 
+                                ngf-select
+                                accept="image/*">Choose File...
+                            </button>
+                            <img ng-if='sign.proof' 
+                                 ngf-src="sign.proof" 
+                                 style="width: auto;height: 35px;">
+                        </span>
+                        <input type="text" ng-if="filed.fieldType == 'DATE' " id="{{filed.id}}" ng-blur="saveText(filed.id);" ng-model="filedVal[filed.fieldType]" readonly style="width:{{filed.minWidth}}px;height:{{filed.minHeight}}px;">
                     </span>
                 </div>
             </div>

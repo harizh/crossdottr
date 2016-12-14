@@ -161,13 +161,11 @@ angular.module('myApp.signContract', ['ngRoute'])
                     //  $rootScope.contractForm.id = response;
                     // $window.location.href = '/#!/contract/' + response;
 
-                })
+                });
 
-
-
-
-        }
-         httpRequestService.get('/party/'+$routeParams.token+'/self')
+        };
+        
+        httpRequestService.get('/party/'+$routeParams.token+'/self')
             .success(function(response) { 
                 console.log(response)
                 $scope.name = response.user.firstName;
