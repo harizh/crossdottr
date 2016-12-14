@@ -10,47 +10,98 @@
               </div>
               <div class="modal-body">
                 <p style="font-size: 13px;"> 
-                    Just like a traditional signature, this mark is used by CrossDottr to represent your intent to sign documents.You appear to be located in <strong>Denmark</strong> where electronic signatures are legally binding. <a class="text-primary _500" href="">Read more</a>
+                    Just like a traditional signature, this mark is used by CrossDottr to represent your intent to sign documents.
                 </p>
                 <div id="signature-pad" class="m-signature-pad modal-dialog">
                     <div>
                      <!-- Nav tabs -->
                       <ul class="nav nav-tabs" role="tablist">
-                        <li role="presentation" class="active nav-item">
+                        <li class="active nav-item" role="presentation">
+                            <!--<a class="nav-link" data-target="#draw" aria-controls="draw" role="tab" data-toggle="tab">Draw Signature</a>-->
+                            <a class="nav-link" ng-click='resizeCanvas()' data-target="#draw" aria-controls="draw" role="tab" data-toggle="tab">Draw Signature</a>
+                        </li>
+
+                        <li role="presentation" class="nav-item">
                             <a class="nav-link" data-target="#type" aria-controls="type" role="tab" data-toggle="tab">
                                 Type Signature
                             </a>
                         </li>
-                        <li class="nav-item" role="presentation">
-                            <a class="nav-link" ng-click='resizeCanvas()' data-target="#draw" aria-controls="draw" role="tab" data-toggle="tab">Draw Signature</a>
-                        </li>
+                        
                         <li class="nav-item" role="presentation">
                             <a class="nav-link" data-target="#upload" aria-controls="upload" role="tab" data-toggle="tab">Upload File</a>
                         </li>
                       </ul>
-                        <div class="tab-content">
-                            <div role="tabpanel" class="tab-pane active" id="type"></div>
-                            <div role="tabpanel" class="tab-pane" id="draw">
-                                <div class="m-signature-pad--body">
-                                    <canvas style="display: block;float: left"></canvas>
-                                </div>
-                                <div class="m-t-sm" style="font-size: 14px;">
-                                    <span class="text-muted">Draw your signature above the line</span>
-                                    <a class="text-danger pull-right" data-action="clear">
-                                        <i class="material-icons">&#xE5CD;</i> Clear Signature
-                                    </a>
-                                </div>
-                            </div>
-                            <div role="tabpanel" class="tab-pane" id="upload">
-                                <div ngf-drop ng-model="sign.files" ngf-select
-                                    accept="image/*"
-                                    ngf-drag-over-class="'dragover'" 
-                                    style="width: 100%;height: 130px;border: 1px solid #f4f4f4;" 
-                                    class="drop-box">Drop</div>
-                                <img ng-if='sign.files' ngf-src="sign.files || '/thumb.jpg'" 
-                                  style="margin-top: 30px;width: 158px;height: auto;">
+                       <div class="tab-content">
+                    <div role="tabpanel" class="tab-pane fade in" id="type">
+                        <div class="row">
+                            <div class="form-group col-md-6 col-md-offset-3 m-b-0">
+                                <input id="divID" type="text" class="form-control has-value" value="Barrington Russell" placeholder="Your name" ng-model="signame">
                             </div>
                         </div>
+
+                        <div class="m-t-md row">
+                            <div class="col-md-6">
+                                <div class="signature-type" style="font-family: 'Allura', cursive;" ng-click="setAllura()" ng-bind="signame | limitTo:20">
+                                       
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="signature-type" style="font-family: 'Kaushan Script',cursive;" ng-click="setKaushan()" ng-bind="signame | limitTo:20">
+                                       
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+                               <div class="signature-type" style="font-family: 'Marck Script', cursive;" ng-click="setMarck()" ng-bind="signame | limitTo:20">
+                                       
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+                               <div class="signature-type" style="font-family: 'Dancing Script', cursive;" ng-click="setDancing()" ng-bind="signame | limitTo:20">
+                                </div>
+                            </div>
+                            <div class="m-t-sm" style="font-size: 14px;">
+                                <span class="text-muted">Type your signature Above</span>
+                                <a class="text-danger pull-right" data-action="cleara"><i class="material-icons">&#xE5CD;</i> Clear Signature</a>
+                            </div>
+                        </div>
+                    </div>
+
+                <!-- Draw Signature -->
+                <div role="tabpanel" class="tab-pane fade in active" id="draw">
+                    <div id="signature-pad" class="m-signature-pad">
+                        <div class="m-signature-pad--body" style="z-index: 9999">
+                            <!--<canvas width="100px" height="100px" style="z-index: 9999 !important"></canvas>-->
+                            <canvas style="display: block;float: left"></canvas>
+                            
+                        </div>
+
+                        <div class="m-t-sm" style="font-size: 14px;">
+                            <span class="text-muted">Draw your signature above the line</span>
+                            <a class="text-danger pull-right" data-action="clear"><i class="material-icons">&#xE5CD;</i> Clear Signature</a>
+                        </div>
+                    </div>
+                </div><!-- End Draw Signature -->
+
+                  <!-- Upload Signature -->
+                <div role="tabpanel" class="tab-pane fade in" id="upload">
+                
+                    <form action="api/dropzone" class="dropzone">
+                        <div class="dz-message" ui-jp="dropzone" ui-options="{ url: 'api/dropzone' }" ngf-drop ng-model="sign.files" ngf-select accept="image/*" ngf-drag-over-class="'dragover'">
+                          <img ng-if='sign.files' ngf-src="sign.files || '/thumb.jpg'" 
+                          style="margin-top: 10px;width: 160px;height: 100px;">
+
+                        <h4 class="m-t-lg m-b">Drop files here or click to upload.</h4>
+                        <span class="text-muted block m-b-lg">Maximum file size: <strong>40 MB</strong>. Acceptable file formats: <strong>png</strong>, <strong>jpg</strong>, <strong>jpeg</strong>, <strong>bmp</strong>, <strong>gif</strong></span>
+                        </div>
+                    </form>
+                                     
+                </div><!-- End Upload Signature -->
+
+                 
+                
+                </div>
                     </div>
                 </div>
               </div>
