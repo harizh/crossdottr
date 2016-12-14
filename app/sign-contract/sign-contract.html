@@ -16,18 +16,23 @@
                     <div>
                      <!-- Nav tabs -->
                       <ul class="nav nav-tabs" role="tablist">
-                        <li class="active nav-item" role="presentation">
+                        <li class="active nav-item" 
+                            ng-click="setSignaturePattern('draw')" role="presentation">
                             <!--<a class="nav-link" data-target="#draw" aria-controls="draw" role="tab" data-toggle="tab">Draw Signature</a>-->
                             <a class="nav-link" ng-click='resizeCanvas()' data-target="#draw" aria-controls="draw" role="tab" data-toggle="tab">Draw Signature</a>
                         </li>
 
-                        <li role="presentation" class="nav-item">
+                        <li role="presentation" 
+                            ng-click="setSignaturePattern('type')"
+                            class="nav-item">
                             <a class="nav-link" data-target="#type" aria-controls="type" role="tab" data-toggle="tab">
                                 Type Signature
                             </a>
                         </li>
                         
-                        <li class="nav-item" role="presentation">
+                        <li class="nav-item"
+                            ng-click="setSignaturePattern('upload')"
+                            role="presentation">
                             <a class="nav-link" data-target="#upload" aria-controls="upload" role="tab" data-toggle="tab">Upload File</a>
                         </li>
                       </ul>
@@ -35,30 +40,16 @@
                     <div role="tabpanel" class="tab-pane fade in" id="type">
                         <div class="row">
                             <div class="form-group col-md-6 col-md-offset-3 m-b-0">
-                                <input id="divID" type="text" class="form-control has-value" value="Barrington Russell" placeholder="Your name" ng-model="signame">
+                                <input id="divID" type="text"
+                                    style="font-family: {{font}}, cursive;" class="form-control has-value" value="Barrington Russell" placeholder="Your name" ng-model="signame">
+                                <canvas id="canvas-type-signature" style="" width="300" height="80" 
+                                style="display:none;font-family: {{font}}, cursive;"></canvas>
                             </div>
                         </div>
 
                         <div class="m-t-md row">
-                            <div class="col-md-6">
-                                <div class="signature-type" style="font-family: 'Allura', cursive;" ng-click="setAllura()" ng-bind="signame | limitTo:20">
-                                       
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="signature-type" style="font-family: 'Kaushan Script',cursive;" ng-click="setKaushan()" ng-bind="signame | limitTo:20">
-                                       
-                                </div>
-                            </div>
-
-                            <div class="col-md-6">
-                               <div class="signature-type" style="font-family: 'Marck Script', cursive;" ng-click="setMarck()" ng-bind="signame | limitTo:20">
-                                       
-                                </div>
-                            </div>
-
-                            <div class="col-md-6">
-                               <div class="signature-type" style="font-family: 'Dancing Script', cursive;" ng-click="setDancing()" ng-bind="signame | limitTo:20">
+                            <div class="col-md-6" ng-repeat='font in fontList'>
+                                <div class="signature-type" style="cursor:pointer;font-family: {{font}}, cursive;" ng-click="setFont(font)" ng-bind="signame | limitTo:20">
                                 </div>
                             </div>
                             <div class="m-t-sm" style="font-size: 14px;">
@@ -73,7 +64,7 @@
                     <div id="signature-pad" class="m-signature-pad">
                         <div class="m-signature-pad--body" style="z-index: 9999">
                             <!--<canvas width="100px" height="100px" style="z-index: 9999 !important"></canvas>-->
-                            <canvas style="display: block;float: left"></canvas>
+                            <canvas id="canvas-signature-pad" style="display: block;float: left"></canvas>
                             
                         </div>
 
@@ -108,7 +99,7 @@
               <div class="modal-footer">
                    <div class="m-signature-pad--footer">
                         <div class="m-t-sm" style="font-size: 14px;text-align: left;">
-                            <input type="checkbox" id="agree"> I agree to have this signature legally represent me.
+                            <input type="checkbox" id="agree"><label for='agree'> I agree to have this signature legally represent me.</label>
                         </div>
                         <div class="m-t-sm pull-right" style="font-size: 14px;">
                             <button type="button" data-dismiss="modal" 

@@ -23,7 +23,7 @@ angular.module('myApp.signContract', ['ngRoute'])
             clearButton = wrapper.querySelector("[data-action=clear]"),
             saveButton = wrapper.querySelector("[data-action=save]"),
             // closeButton = wrapper.querySelector("[data-action=close]"),
-            canvas = wrapper.querySelector("canvas"),
+            canvas = wrapper.querySelector("canvas#canvas-signature-pad"),
             signaturePad;
 
         // Adjust canvas coordinate space taking into account pixel ratio,
@@ -53,6 +53,8 @@ angular.module('myApp.signContract', ['ngRoute'])
         $scope.resizeCanvas();
 
         signaturePad = new SignaturePad(canvas);
+        var signatureTyped =document.getElementById("canvas-type-signature");
+        jQuery(signatureTyped).hide();
 
         clearButton.addEventListener("click", function(event) {
             signaturePad.clear();
@@ -62,90 +64,104 @@ angular.module('myApp.signContract', ['ngRoute'])
         //     angular.element('#signature-container').css('visibility', 'hidden').css('height', '0');
         //     angular.element('.overlay').hide()
         // });
+        function isCanvasBlank(canvas) {
+            var blank = document.createElement('canvas');
+            blank.width = canvas.width;
+            blank.height = canvas.height;
 
-        saveButton.addEventListener("click", function(event) {
+            return canvas.toDataURL() == blank.toDataURL();
+        }
+
+        function setSignatureOnDocument(dataUrl){
+            if($('#img-tag').length > 0) {                        
+                $('#img-tag').attr('src', dataUrl)
+            } else {
+                $('#sign-text').remove();
+                var wd = $('.sign-holder').css('width'),
+                 he = $('.sign-holder').css('height');
+                $('.sign-holder').append('<img id="img-tag" src="'+dataUrl+'" style="width:'+wd+';height:'+he+'">')
+            }
+            console.log(dataUrl);
+            var formData = {data: dataUrl};
+            console.log($('.SIGNATURE').attr('id'))
+            var id = $('.SIGNATURE').attr('id');
+            $('#' + id).find('span').remove()
+            $('#' + id).css('padding', 0)
+            httpRequestService.post('/party/token/' + $routeParams.token + '/field/' + id + '/json/object', formData)
+                .success(function(response) {
+                    console.log(1, response);
+                    angular.element('#signature-container').css('visibility', 'hidden').css('height', '0')
+                    angular.element('.overlay').hide();
+                    jQuery('#signature-container').modal('hide');
+                })
+        }
+        function saveDrawImage(){
             if (signaturePad.isEmpty()) {
                 alert("Please provide signature first.");
             } else {
-                if ($('#agree').prop('checked')) {
+                
                     //   alert("canvas Signature upload Successfully.");
                     // angular.element('.item-color').css('color','red')
                     //  window.open(signaturePad.toDataURL());
                     var dataUrl = signaturePad.toDataURL();
-                    
-                    if($('#img-tag').length > 0) {                        
-                        $('#img-tag').attr('src', dataUrl)
-                    } else {
-                        $('#sign-text').remove();
-                        var wd = $('.sign-holder').css('width'),
-                         he = $('.sign-holder').css('height');
-                        $('.sign-holder').append('<img id="img-tag" src="'+dataUrl+'" style="width:'+wd+';height:'+he+'">')
-                    }
+                    setSignatureOnDocument(dataUrl);
 
-                    // dataUrl = dataUrl.replace('data:image/png;base64,', '');
+                   // dataUrl = dataUrl.replace('data:image/png;base64,', '');
+                   // var dataUrl = signaturePad.toDataURL("image/jpeg");
+                   // var blob = dataURItoBlob(dataUrl);
+            }
+        }
 
+        function saveTypeImage(){
+            if (isCanvasBlank(signatureTyped)) {
+                alert("Please provide signature first.");
+            } else {
+                var dataUrl = signatureTyped.toDataURL();
+                setSignatureOnDocument(dataUrl);
+            }
+        }
+        function saveUploadImage(){
 
-
-                    // var dataUrl = signaturePad.toDataURL("image/jpeg");
-
-
-
-                    // var blob = dataURItoBlob(dataUrl);
-                    console.log(dataUrl)
-                    var formData = {
-
-                        data: dataUrl
-
-                    };
-                    console.log($('.SIGNATURE').attr('id'))
-                    var id = $('.SIGNATURE').attr('id');
-                    $('#' + id).find('span').remove()
-                    $('#' + id).css('padding', 0)
-                    httpRequestService.post('/party/token/' + $routeParams.token + '/field/' + id + '/json/object', formData)
-                        .success(function(response) {
-                            console.log(1, response);
-                            angular.element('#signature-container').css('visibility', 'hidden').css('height', '0')
-                            angular.element('.overlay').hide()
-
-                        })
-                } else {
-                    alert('Please agree')
+        }
+        saveButton.addEventListener("click", function(event) {
+            if ($('#agree').prop('checked')) {
+                switch($scope.signaturePattern){
+                    case 'draw':
+                        saveDrawImage();
+                        break;
+                    case 'type':
+                        saveTypeImage();
+                        break;
+                    case 'upload':
+                        saveUploadImage();
+                        break
                 }
-
+            }else{
+                alert('Please agree')
             }
         });
-        $scope.setAllura=function()
-        {
-            var myEl = angular.element( document.querySelector( '#divID' ) );
-            myEl.css('font-family','Allura');     
-        }
-
-        $scope.setKaushan=function()
-        {
-            var myEl = angular.element( document.querySelector( '#divID' ) );
-            myEl.css('font-family','Kaushan Script');     
-        }
-
-        $scope.setMarck=function()
-        {
-            var myEl = angular.element( document.querySelector( '#divID' ) );
-            myEl.css('font-family','Marck Script');     
-        }
-
-        $scope.setDancing=function()
-        {
-            var myEl = angular.element( document.querySelector( '#divID' ) );
-            myEl.css('font-family','Dancing Script');     
-        }
+        $scope.fontList = ['Allura','Kaushan Script','Marck Script','Dancing Script'];
+        $scope.signaturePattern = 'draw';
+        $scope.font = $scope.fontList[0];
         $scope.signame = 'Barrington Russel';
-
         $scope.sign={
             file : {}
         };
-        
-        
+        $scope.setSignaturePattern = function(pattern){
+            $scope.signaturePattern = pattern;
+        }
+        $scope.setFont = function(font){
+            $scope.font = font;
+            var ctx = signatureTyped.getContext("2d");
+            ctx.clearRect(0, 0, signatureTyped.width, signatureTyped.height);
+            ctx.fillText($scope.signame,10,40);
+
+            ctx.font='28px '+$scope.font;
+        }
+        $scope.setFont($scope.font);
+
         $scope.$watch('sign.files', function () {
-            console.log($scope.sign.files);
+            //console.log($scope.sign.files);
             //$scope.upload($scope.files);
         });
         $scope.showSignaturePad = function(id) {
