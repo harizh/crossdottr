@@ -80,9 +80,10 @@
                 
                     <form action="api/dropzone" class="dropzone">
                         <div class="dz-message" ui-jp="dropzone" ui-options="{ url: 'api/dropzone' }" ngf-drop ng-model="sign.files" ngf-select accept="image/*" ngf-drag-over-class="'dragover'">
-                          <img ng-if='sign.files' ngf-src="sign.files || '/thumb.jpg'" 
-                          style="margin-top: 10px;width: 160px;height: 100px;">
-
+                          <img id="signature-uploaded" ng-if='sign.files' ngf-src="sign.files || '/thumb.jpg'" 
+                          style="margin-top: 10px;width: auto;height: 100px;">
+                          <canvas id="canvas-upload-signature" style="" width="300" height="80" 
+                                style="display:none;font-family: {{font}}, cursive;"></canvas>
                         <h4 class="m-t-lg m-b">Drop files here or click to upload.</h4>
                         <span class="text-muted block m-b-lg">Maximum file size: <strong>40 MB</strong>. Acceptable file formats: <strong>png</strong>, <strong>jpg</strong>, <strong>jpeg</strong>, <strong>bmp</strong>, <strong>gif</strong></span>
                         </div>
@@ -128,9 +129,9 @@
                         <span ng-if="filed.fieldType == 'SIGNATURE'" 
                             ng-click="showSignaturePad(filed.id)"
                             data-toggle="modal" data-target="#signature-container"
-                            id="{{filed.id}}" class="{{filed.fieldType}} sign-holder btn" style="width:{{filed.minWidth}}px;height:{{filed.minHeight}}px; padding:0;">
+                            id="{{filed.id}}" class="{{filed.fieldType}} sign-holder btn" style="width:250px;height:auto; padding:0;">
                             <span style="width:{{filed.minWidth}}px;height:{{filed.minHeight}}px;" ng-if="!utl" id="sign-text">{{filed.fieldType}}</span>
-                        <img id="img-tag" src="{{utl}}" ng-if="utl" style="width:{{filed.minWidth}}px;height:{{filed.minHeight}}px;">
+                        <img id="img-tag" src="{{utl}}" ng-if="utl" style="width:250px;height:auto;">
                         </span>
                         <input type="text" ng-if="filed.fieldType == 'NAME'" id="{{filed.id}}" ng-blur="saveText(filed.id);" value="{{filed.text}}" ng-readonly="filed.text" style="width:{{filed.minWidth}}px;height:{{filed.minHeight}}px;" placeholder="NAME">
                             

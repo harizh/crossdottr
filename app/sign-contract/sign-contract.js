@@ -55,6 +55,8 @@ angular.module('myApp.signContract', ['ngRoute'])
         signaturePad = new SignaturePad(canvas);
         var signatureTyped =document.getElementById("canvas-type-signature");
         jQuery(signatureTyped).hide();
+        var signatureUploaded =document.getElementById("canvas-upload-signature");
+        jQuery(signatureUploaded).hide();
 
         clearButton.addEventListener("click", function(event) {
             signaturePad.clear();
@@ -70,6 +72,20 @@ angular.module('myApp.signContract', ['ngRoute'])
             blank.height = canvas.height;
 
             return canvas.toDataURL() == blank.toDataURL();
+        }
+
+        function getBase64Image(img) {
+            // Create an empty canvas element
+            signatureUploaded.width = img.x;
+            signatureUploaded.height = img.y;
+
+            // Copy the image contents to the canvas
+            var ctx = signatureUploaded.getContext("2d"); 
+            ctx.clearRect(0,0,signatureUploaded.width, signatureUploaded.height);
+            ctx.drawImage(img, 0,0, img.x, img.y);
+    
+
+            return  signatureUploaded.toDataURL();
         }
 
         function setSignatureOnDocument(dataUrl){
@@ -90,8 +106,6 @@ angular.module('myApp.signContract', ['ngRoute'])
             httpRequestService.post('/party/token/' + $routeParams.token + '/field/' + id + '/json/object', formData)
                 .success(function(response) {
                     console.log(1, response);
-                    angular.element('#signature-container').css('visibility', 'hidden').css('height', '0')
-                    angular.element('.overlay').hide();
                     jQuery('#signature-container').modal('hide');
                 })
         }
@@ -121,7 +135,12 @@ angular.module('myApp.signContract', ['ngRoute'])
             }
         }
         function saveUploadImage(){
-
+            if (!$scope.sign.files) {
+                alert("Please provide signature first.");
+            } else {
+                var dataUrl = getBase64Image(document.getElementById('signature-uploaded'));
+                setSignatureOnDocument(dataUrl);
+            }
         }
         saveButton.addEventListener("click", function(event) {
             if ($('#agree').prop('checked')) {
